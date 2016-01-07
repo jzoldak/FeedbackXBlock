@@ -19,6 +19,7 @@ class PatchRandomMixin(object):
         self.random_patch_value = None
 
         def patched_uniform(min, max):
+            print "I will now return a patched value"
             return self.random_patch_value
 
         patcher = mock.patch("random.uniform",
@@ -27,6 +28,7 @@ class PatchRandomMixin(object):
         self.addCleanup(patcher.stop)
 
     def set_random(self, random_patch_value):
+        print "Setting random's return value to '{}'".format(random_patch_value)
         self.random_patch_value = random_patch_value
 
 
@@ -87,6 +89,7 @@ class TestFeedback(PatchRandomMixin, XBlockTestCase):
 
         Confirm that we do this stochastically based no `p`
         """
+        print "checking response for block {}".format(block_urlname)
         response = self.render_block(block_urlname)
         self.assertEqual(response.status_code, 200)
         if rendered:
@@ -100,6 +103,7 @@ class TestFeedback(PatchRandomMixin, XBlockTestCase):
         state between them, initial state is correct, and final state
         is correct.
         """
+        print "selecting student 0"
         self.select_student(0)
         # We confirm we don't have errors rendering the student view
         self.check_response('feedback_0', True)
@@ -128,5 +132,7 @@ class TestFeedback(PatchRandomMixin, XBlockTestCase):
         self.check_response('feedback_1', True)
 
         # But it should not render for a new student
+        print "selecting student 1"
         self.select_student(1)
         self.check_response('feedback_1', False)
+        self.assertTrue(False)

@@ -241,8 +241,10 @@ class FeedbackXBlock(XBlock):
         # we set the fragment to the rendered XBlock. Otherwise, we return
         # empty HTML. There ought to be a way to return None, but XBlocks
         # doesn't support that.
+        print "puser_value is '{}'".format(self.p_user)
         if self.p_user == -1:
             self.p_user = random.uniform(0, 100)
+        print "puser_value is now '{}'".format(self.p_user)
         if self.p_user < self.p:
             frag = Fragment(rendered)
         else:
