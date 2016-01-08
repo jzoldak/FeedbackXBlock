@@ -1,13 +1,9 @@
 '''
 Tests for the FeedbackXBlock.
 '''
-
-import json
-import sys
-
-from openedx.tests.xblock_integration.xblock_testcase import XBlockTestCase
 import mock
-
+import random
+from openedx.tests.xblock_integration.xblock_testcase import XBlockTestCase
 
 class PatchRandomMixin(object):
     """
@@ -22,9 +18,13 @@ class PatchRandomMixin(object):
             print "I will now return a patched value"
             return self.random_patch_value
 
+        print "I have not yet patched random.uniform"
+        print random.uniform
         patcher = mock.patch("random.uniform",
                              patched_uniform)
         patcher.start()
+        print "I have patched random.uniform"
+        print random.uniform
         self.addCleanup(patcher.stop)
 
     def set_random(self, random_patch_value):
