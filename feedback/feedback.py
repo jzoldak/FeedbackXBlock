@@ -243,6 +243,9 @@ class FeedbackXBlock(XBlock):
         # doesn't support that.
         print "puser_value is '{}'".format(self.p_user)
         if self.p_user == -1:
+            print "I am about to call random.uniform, which in this case is:"
+            print random.uniform
+
             self.p_user = random.uniform(0, 100)
         print "puser_value is now '{}'".format(self.p_user)
         if self.p_user < self.p:
